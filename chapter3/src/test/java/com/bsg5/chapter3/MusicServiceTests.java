@@ -5,7 +5,8 @@ import com.bsg5.chapter3.model.Song;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class MusicServiceTests {
     private Object[][] model = new Object[][]{
@@ -43,9 +44,9 @@ public class MusicServiceTests {
         populateService(service);
         iterateOverModel(data ->
                 assertEquals(
+                        ((Integer) data[2]).intValue(),
                         service.getSong((String) data[0],
-                                (String) data[1]).getVotes(),
-                        ((Integer) data[2]).intValue()
+                                (String) data[1]).getVotes()
                 ));
     }
 
@@ -53,20 +54,20 @@ public class MusicServiceTests {
         reset(service);
         populateService(service);
         List<Song> songs = service.getSongsForArtist("Threadbare Loaf");
-        assertEquals(songs.size(), 2);
-        assertEquals(songs.get(0).getName(), "What Happened To Our First CD?");
-        assertEquals(songs.get(0).getVotes(), 17);
-        assertEquals(songs.get(1).getName(), "Someone Stole the Flour");
-        assertEquals(songs.get(1).getVotes(), 4);
+        assertEquals(2,songs.size());
+        assertEquals("What Happened To Our First CD?", songs.get(0).getName());
+        assertEquals(17, songs.get(0).getVotes());
+        assertEquals("Someone Stole the Flour", songs.get(1).getName());
+        assertEquals(4, songs.get(1).getVotes());
     }
 
     void testMatchingArtistNames(MusicService service) {
         reset(service);
         populateService(service);
         List<String> names = service.getMatchingArtistNames("Th");
-        assertEquals(names.size(), 2);
-        assertEquals(names.get(0), "Therapy Zeppelin");
-        assertEquals(names.get(1), "Threadbare Loaf");
+        assertEquals(2, names.size());
+        assertEquals("Therapy Zeppelin", names.get(0));
+        assertEquals("Threadbare Loaf", names.get(1));
     }
 
     void testMatchingSongNamesForArtist(MusicService service) {
@@ -75,7 +76,7 @@ public class MusicServiceTests {
         List<String> names = service.getMatchingSongNamesForArtist(
                 "Threadbare Loaf", "W"
         );
-        assertEquals(names.size(), 1);
-        assertEquals(names.get(0), "What Happened To Our First CD?");
+        assertEquals(1, names.size());
+        assertEquals("What Happened To Our First CD?", names.get(0));
     }
 }

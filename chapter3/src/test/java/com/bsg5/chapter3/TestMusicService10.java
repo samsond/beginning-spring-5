@@ -1,35 +1,42 @@
 package com.bsg5.chapter3;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestConfiguration.class})
-public class TestMusicService10 extends AbstractTestNGSpringContextTests {
+public class TestMusicService10 {
     @Autowired
     MusicServiceTests tests;
 
-    @DataProvider
-    Object[][] configurations() {
-        return new Object[][]{
-                {"/config-01.xml"},
-                {"/config-02.xml"},
-                {"/config-03.xml"},
-                {"/config-04.xml"},
-                {"/config-05.xml"},
-                {"/config-06.xml"},
-                {Configuration7.class},
-                {Configuration8.class},
-                {Configuration9.class},
-                {Configuration10.class}
-        };
+    static Stream<Arguments> configurations() {
+        return Stream.of(
+                Arguments.of("/config-01.xml"),
+                Arguments.of("/config-02.xml"),
+                Arguments.of("/config-03.xml"),
+                Arguments.of("/config-04.xml"),
+                Arguments.of("/config-05.xml"),
+                Arguments.of("/config-06.xml"),
+                Arguments.of(Configuration7.class),
+                Arguments.of(Configuration8.class),
+                Arguments.of(Configuration9.class),
+                Arguments.of(Configuration10.class)
+        );
     }
 
     // tag::runMethod[]
@@ -48,28 +55,34 @@ public class TestMusicService10 extends AbstractTestNGSpringContextTests {
         method.accept(service);
     }
 
-    @Test(expectedExceptions = RuntimeException.class)
+    @Test
     public void testRunMethod() {
-        runMethod(Boolean.TRUE, tests::testSongVoting);
+
+        RuntimeException throwException = assertThrows(RuntimeException.class, () -> runMethod(Boolean.TRUE, tests::testSongVoting));
+        assertEquals("Invalid configuration argument: true", throwException.getMessage());
     }
     // end::runMethod[]
 
-    @Test(dataProvider = "configurations")
+    @ParameterizedTest
+    @MethodSource("configurations")
     public void testSongVoting(Object config) {
         runMethod(config, tests::testSongVoting);
     }
 
-    @Test(dataProvider = "configurations")
+    @ParameterizedTest
+    @MethodSource("configurations")
     public void testGetMatchingArtistNames(Object config) {
         runMethod(config, tests::testMatchingArtistNames);
     }
 
-    @Test(dataProvider = "configurations")
+    @ParameterizedTest
+    @MethodSource("configurations")
     public void testGetSongsForArtist(Object config) {
         runMethod(config, tests::testSongsForArtist);
     }
 
-    @Test(dataProvider = "configurations")
+    @ParameterizedTest
+    @MethodSource("configurations")
     public void testMatchingSongNamesForArtist(Object config) {
         runMethod(config, tests::testMatchingSongNamesForArtist);
     }

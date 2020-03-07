@@ -22,6 +22,7 @@ allprojects {
         testImplementation "org.testng:testng:$testNgVersion"
         testImplementation "org.junit.jupiter:junit-jupiter-api:$testJunitVersion"
         testRuntime "org.junit.jupiter:junit-jupiter-engine:$testJunitVersion"
+        testCompile("org.junit.jupiter:junit-jupiter-params:$testJunitVersion")
     }
 
     test {
