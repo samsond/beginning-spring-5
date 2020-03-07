@@ -1,12 +1,15 @@
 package com.bsg5.chapter3;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.Test;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "/config-03.xml")
-public class TestMusicService3 extends AbstractTestNGSpringContextTests {
+public class TestMusicService3 {
     @Autowired
     MusicService service;
 

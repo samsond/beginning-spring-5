@@ -1,22 +1,23 @@
 package com.bsg5.chapter3;
 
 import com.bsg5.chapter3.model.Song;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.Test;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
+
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "/config-01.xml")
-public class TestMusicService1 extends AbstractTestNGSpringContextTests {
+public class TestMusicService1 {
     @Autowired
     ApplicationContext context;
     @Autowired
@@ -45,6 +46,6 @@ public class TestMusicService1 extends AbstractTestNGSpringContextTests {
         Song song = service.getSong(
                 "Threadbare Loaf", "Someone Stole the Flour"
         );
-        assertEquals(song.getVotes(), 0);
+        assertEquals(0, song.getVotes());
     }
 }
