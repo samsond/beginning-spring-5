@@ -3,3 +3,7 @@ dependencies {
     compile "org.springframework:spring-context:$springFrameworkVersion"
     compile "org.springframework:spring-test:$springFrameworkVersion"
 }
+
+test {
+    useJUnitPlatform()
+}

@@ -7,6 +7,7 @@ ext {
     springFrameworkVersion = "5.1.5.RELEASE"
     jacksonVersion = "2.9.9"
     testNgVersion = "6.14.3"
+    testJunitVersion = "5.6.0"
 }
 
 allprojects {
@@ -19,6 +20,8 @@ allprojects {
 
     dependencies {
         testImplementation "org.testng:testng:$testNgVersion"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$testJunitVersion"
+        testRuntime "org.junit.jupiter:junit-jupiter-engine:$testJunitVersion"
     }
 
     test {
