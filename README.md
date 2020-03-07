@@ -14,3 +14,7 @@ Release v1.0 corresponds to the code in the published book, without corrections 
 ## Contributions
 
 See the file Contributing.md for more information on how you can contribute to this repository.
+
+## Change
+
+This forked repo is aimed to refactor testNG to Junit 5.
